@@ -12,4 +12,8 @@ mongoose.connect('mongodb+srv://twoligma:tangerine8@cluster0-agcvh.mongodb.net/t
 
 app.use(foodRouter);
 
-app.listen(process.env.PORT || 3000, () => { console.log('Server is running...') });
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
