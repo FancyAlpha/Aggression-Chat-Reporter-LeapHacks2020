@@ -12,7 +12,7 @@ app.get('/', async (req, res) => {
 
 app.get('/comments', async (req, res) => {
   const comments = await commentModel.find({});
-
+  console.log("WE R HERE NOW");
   try {
     res.send(comments);
   } catch (err) {
