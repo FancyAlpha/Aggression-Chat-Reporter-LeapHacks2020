@@ -79,7 +79,7 @@ for i in range(len(label_cols)):
 print(np.shape(np.asarray(r_values).reshape(6, 435376)))
 r_values = np.asarray(r_values).reshape(6, 435376)
 
-np.save('models/r_values.npy', r_values)
+np.save('r_values.npy', r_values)
 test_arr = np.load('r_values.npy')
 # files.download('r_values.npy')
 print(test_arr.shape)
