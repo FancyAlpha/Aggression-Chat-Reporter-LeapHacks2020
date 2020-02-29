@@ -1,10 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import Helmet from 'react-helmet';
+
 import App from './App';
+
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+/** my starts code here **/
+import {BrowserRouter as Router} from "react-router-dom";
+
+ReactDOM.render((
+    <Router>
+        <Helmet>
+            <title>Aggression Chatbot Data</title>
+        </Helmet>
+        <App/>
+    </Router>), document.getElementById('root'));
+/** my code ends here **/
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
