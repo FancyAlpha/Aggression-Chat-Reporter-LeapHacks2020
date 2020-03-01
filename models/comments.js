@@ -14,6 +14,12 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  severity: {
+    type: Integer
+  },
+  tags: [{
+     tag: String 
+  }],
   created: {
       type: Date, default: Date.now
     }
