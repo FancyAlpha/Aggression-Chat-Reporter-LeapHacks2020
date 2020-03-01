@@ -3,6 +3,7 @@ import pandas as pd, numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import re, string
+import joblib
 
 train = pd.read_csv('comment-data/train.csv')
 test = pd.read_csv('comment-data/test.csv')
@@ -37,8 +38,11 @@ vec = TfidfVectorizer(ngram_range=(1,2), tokenizer=tokenize,
                min_df=3, max_df=0.9, strip_accents='unicode', use_idf=1,
                smooth_idf=1, sublinear_tf=1 )
 train_term_doc = vec.fit_transform(train['comment_text'])
+joblib.dump(vec, 'vectorizer.joblib')
+vec = joblib.load('vectorizer.joblib')
 test_term_doc = vec.transform(test['comment_text'])
 
+print(test_term_doc.shape)
 
 def pr(y_i, y):
     p = x[y==y_i].sum(0)
@@ -53,6 +57,7 @@ def get_mdl(y):
     # print("y", y)
     r = np.log(pr(1,y) / pr(0,y))
     # print("r", r)
+    print(r.shape)
     m = LogisticRegression(C=4, dual=True, solver='liblinear', max_iter=300)
     x_nb = x.multiply(r)
     return m.fit(x_nb, y), r
@@ -76,11 +81,12 @@ print(type(models))
 for i in range(len(label_cols)):
   joblib.dump(models[i], 'models/' + str(label_cols[i]) + '_model.joblib')
   # files.download(str(label_cols[i]) + '_model.joblib')
-print(np.shape(np.asarray(r_values).reshape(6, 435376)))
-r_values = np.asarray(r_values).reshape(6, 435376)
+  print()
+print(np.shape(np.asarray(r_values).reshape(6, 434904)))
+r_values = np.asarray(r_values).reshape(6, 434904)
 
 np.save('r_values.npy', r_values)
-test_arr = np.load('r_values.npy')
-# files.download('r_values.npy')
-print(test_arr.shape)
+# test_arr = np.load('r_values.npy')
+# # files.download('r_values.npy')
+# print(test_arr.shape)
 
