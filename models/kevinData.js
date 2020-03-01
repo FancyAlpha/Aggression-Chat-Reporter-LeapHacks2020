@@ -17,9 +17,6 @@ const CommentSchema = new mongoose.Schema({
   severity: {
     type: Integer
   },
-  processed: {
-    type: Integer
-  },
   tags: [{
      tag: String 
   }],
