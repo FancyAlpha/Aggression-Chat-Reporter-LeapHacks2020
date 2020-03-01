@@ -8,6 +8,7 @@ import pandas as pd, numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import re, string
+import time
 
 
 # URL = "http://aggression-detector.herokuapp.com/comments"
@@ -15,6 +16,13 @@ import re, string
 # r = requests.get(URL)
 #
 # text = ""
+
+
+
+def tokenize(s):
+    re_tok = re.compile(r'([“”¨«»®´·º½¾¿¡§£₤‘’])')
+    return re_tok.sub(r' \1 ', s.strip(string.punctuation)).split()
+
 
 # train = pd.read_csv('comment-data/train.csv')
 def classify (text):
@@ -38,10 +46,7 @@ def classify (text):
     # print(models)
 
     test['comment_text'].fillna("unknown", inplace=True)
-    re_tok = re.compile(r'([“”¨«»®´·º½¾¿¡§£₤‘’])')
 
-    def tokenize(s):
-      return re_tok.sub(r' \1 ', s.strip(string.punctuation)).split()
 
     # n = train.shape[0]
     vec = TfidfVectorizer(ngram_range=(1,2), tokenizer=tokenize,
@@ -93,3 +98,32 @@ def classify (text):
     print(tags)
     severity = np.sum(preds)
     return tags, severity
+
+if __name__ == '__main__':
+    import requests
+    import json
+    from classify_one_comment import classify
+    import re
+
+    GET_URL = "http://aggression.herokuapp.com/comments"
+    POST_URL = "http://aggression.herokuapp.com/comment"
+    processed_set = set()
+    while True:
+        reqs = json.loads(requests.get(GET_URL).content)
+        for r in reqs:
+            print(r)
+        # print(type(r))
+        for r in reqs:
+            if "processed" in r.keys() and not r['processed'] and r['_id'] not in processed_set:
+                tags, severity = classify(r['message'])
+                if severity > 0:
+                    print("send post request")
+                    processed_set.add(r['_id'])
+                    post = requests.post(POST_URL, json={'userName': r['userName'], 'message': r['message'], 'channel': r['channel'],
+                                               "processed": 1, 'tags': tags, 'severity': severity})
+                    print(post.text)
+
+        time.sleep(5)
+
+
+
