@@ -60,19 +60,27 @@ class Data extends React.Component {
         //                  date={"date"}
         //                  tags={["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]}/>);
 
-        for (var i = 0; i < this.state.data.length; i++) {
+        for (var i = this.state.data.length-1; i >= 0; i--) {
             console.log(this.state.data[i]);
 
 
             if (this.state.data[i]["processed"] == 1) {
                 var date = new Date(this.state.data[i]["created"]);
 
-                var tag_list = this.state.data[i].tags;// ? this.state.data[i].tags : ["toxic"];
+                var sev = this.state.data[i]["severity"];
+                var tag_list = this.state.data[i]["tags"];// ? this.state.data[i].tags : ["toxic"];
                 flags.push(<Flag username={this.state.data[i]["userName"]}
                                  text={this.state.data[i]["message"]}
                                  date={date.toLocaleTimeString() + " " + date.toDateString()}
-                                 tags={tag_list}/>);
+                                 tags={tag_list}
+                                 severity={sev}
+                                 channel={this.state.data[i]["channel"]}
+                />);
             }
+        }
+
+        if(this.state.data.length == 0) {
+            return <h6>No obscenity detected</h6>
         }
 
         return flags;
@@ -97,6 +105,8 @@ class Data extends React.Component {
                 <Container maxWidth={"md"} fixed>
                     <div className={"flags-list"}>
                         {this.renderFlags()}
+
+                        {}
                     </div>
                 </Container>
             </ThemeProvider>

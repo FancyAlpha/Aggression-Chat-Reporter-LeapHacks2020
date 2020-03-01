@@ -11,7 +11,7 @@ import {orange} from "@material-ui/core/colors";
 function App() {
     return (
         <div className="App grey-container">
-            <Route path={"/"} exact component={Landing}/>
+            <Route path={"/"} exact component={Data}/>
             <Route path={"/data"} exact component={Data}/>
         </div>
     );
