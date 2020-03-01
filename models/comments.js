@@ -15,10 +15,10 @@ const CommentSchema = new mongoose.Schema({
     required: true,
   },
   severity: {
-    type: Integer
+    type: Number
   },
   processed: {
-    type: Integer
+    type: Number
   },
   tags: [{
      tag: String 

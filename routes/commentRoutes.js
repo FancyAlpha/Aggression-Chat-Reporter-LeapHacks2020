@@ -21,16 +21,6 @@ app.get('/comments', async (req, res) => {
   }
 });
 
-app.post('/sendToKevin', async (req, res) => {
-  const comment = new commentModel(req.body);
-  try {
-    await comment.save();
-    res.send(comment);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
 app.post('/comment', async (req, res) => {
     const comment = new commentModel(req.body);
   
