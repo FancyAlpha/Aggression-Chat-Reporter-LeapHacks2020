@@ -21,7 +21,7 @@ const CommentSchema = new mongoose.Schema({
     type: Number
   },
   tags: [{
-     tag: String 
+     type: String 
   }],
   created: {
       type: Date, default: Date.now
