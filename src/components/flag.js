@@ -13,19 +13,29 @@ class Flag extends React.Component {
 
     constructor(props) {
         super(props);
-        this.colorMap["bad"] = "primary";
-        this.colorMap["very bad"] = "secondary";
-        this.colorMap["very very bad"] = "error";
+        this.colorMap["toxic"] = "#d32f2f";
+        this.colorMap["severe_toxic"] = "#b71c1c";
+        this.colorMap["obscene"] = "#6a1b9a";
+        this.colorMap["threat"] = "#d84315";
+        this.colorMap["insult"] = "#fbc02d";
+        this.colorMap["identity_hate"] = "#f57c00";
     }
 
-    renderTags = (styles) => {
+    renderTags = () => {
 
         var chips = [];
 
+        console.log(this.colorMap["toxic"]);
+        console.log(this.colorMap);
         for (let i = 0; i < this.props.tags.length; i++) {
-            chips.push(<Chip color={this.colorMap[this.props.tags[i]]}
+            chips.push(<Chip //color={this.colorMap[this.props.tags[i]]}
                              label={this.props.tags[i]}
-                             style={{marginRight: "8px"}}/>);
+                             style={{
+                                 marginRight: "8px",
+                                 color: "white",
+                                 backgroundColor: this.colorMap[this.props.tags[i]],
+                             }}
+            />);
         }
 
         return chips;

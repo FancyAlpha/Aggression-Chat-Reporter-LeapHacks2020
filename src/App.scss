@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Staatliches|Ubuntu&display=swap');
+
+
 body {
   margin: 0;
 }
@@ -12,4 +15,24 @@ body {
 
 .flag {
   margin: 16px auto;
+}
+
+.header {
+  height: 60vh;
+
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
+  color: white;
+}
+
+.title-text {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.title-subtitle {
+  font-family: cursive;
 }
